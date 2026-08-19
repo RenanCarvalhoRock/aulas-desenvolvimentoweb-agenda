@@ -12,7 +12,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class contato {
-    private int id;
+    private String id;
     private String nome;
     private String telefone;
     private String email;

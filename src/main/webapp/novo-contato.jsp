@@ -8,22 +8,22 @@
 
   <body class="text-left mt-5">
 
-    <h1>Editar Contato</h1>
-    <form action="${pageContext.request.contextPath}/editar-contato" method="post">
-        <input type="hidden" name="id" value="${contato.id}">
+    <h1>Novo Contato</h1>
+    <form action="${pageContext.request.contextPath}/novo-contato" method="post">
         <div class="mb-3">
             <label for="nome" class="form-label">Nome</label>
-            <input type="text" class="form-control" id="nome" value="${contato.nome}" name="nome" required>
+            <input type="text" class="form-control" id="nome" name="nome" required>
         </div>
         <div class="mb-3">
             <label for="telefone" class="form-label">Telefone</label>
-            <input type="text" class="form-control" id="telefone" value="${contato.telefone}" name="telefone" required>
+            <input type="text" class="form-control" id="telefone" name="telefone" required>
         </div>
         <div class="mb-3">
             <label for="email" class="form-label">Email</label>
-            <input type="email" class="form-control" id="email" value="${contato.email}" name="email" required>
+            <input type="email" class="form-control" id="email" name="email" required>
         </div>
         <a href="${pageContext.request.contextPath}/agenda" type="submit" class="btn btn-primary btn-lg mt-3">Salvar</a>
+        <a href="${pageContext.request.contextPath}/agenda" type="submit" class="btn btn-outline-secondary btn-lg mt-3">Cancelar</a>
     </form>
 
 
