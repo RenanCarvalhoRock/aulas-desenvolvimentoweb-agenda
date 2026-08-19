@@ -11,7 +11,7 @@
     <h1>Sistema de Agenda Telefônica</h1>
     <img src="${pageContext.request.contextPath}/resources/img/agenda.png" alt="Agenda Icon" class="mb-3">
     <p class="text-muted">Organize seus contatos em um só lugar</p>
-    <a href="agenda.jsp" class="btn btn-primary btn-lg mt-3">Acessar</a>
+    <a href="${pageContext.request.contextPath}/agenda" class="btn btn-primary btn-lg mt-3">Acessar</a>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
