@@ -3,61 +3,95 @@ package dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import factory.DatabaseConnect;
 import model.contato;
 
 public class contatoDAO {
     private static List<contato> contatos = new ArrayList<>();
-    static{
-        contatos.add(
-                contato.builder()
-                        .id("1")
-                        .nome("João")
-                        .telefone("123456789")
-                        .email("joao@exemplo.com")
-                        .build());
-        contatos.add(
-                contato.builder()
-                        .id("2")
-                        .nome("Jose")
-                        .telefone("123456780")
-                        .email("jose@exemplo.com")
-                        .build());
-    }
 
     public static List<contato> listar() {
-        return contatos;
+        var query = "SELECT * FROM contatos";
+        try{
+            var connection = DatabaseConnect.getConnection();
+            var statement = connection.createStatement();
+            var resultSet = statement.executeQuery(query);
+
+            while(resultSet.next()){
+                var c = contato.builder()
+                .id(resultSet.getString("id"))
+                .nome(resultSet.getString("nome"))
+                .telefone(resultSet.getString("telefone"))
+                .email(resultSet.getString("email"))
+                .build();
+                contatos.add(c);
+            }
+            return contatos;
+        }catch(Exception e){
+            throw new RuntimeException("Erro ao listar contatos", e);
+        }
     }
 
     public static contato buscarPorId(String id){
-        for (contato c : contatos) {
-            if (c.getId().equals(id)) {
+        var query = "SELECT * FROM contatos WHERE id = '" + id + "'";
+        try{
+            var connection = DatabaseConnect.getConnection();
+            var statement = connection.createStatement();
+            var resultSet = statement.executeQuery(query);
+
+            if(resultSet.next()){
+                var c = contato.builder()
+                .id(resultSet.getString("id"))
+                .nome(resultSet.getString("nome"))
+                .telefone(resultSet.getString("telefone"))
+                .email(resultSet.getString("email"))
+                .build();
                 return c;
+            }else{
+                return null;
             }
+        }catch(Exception e){
+            throw new RuntimeException("Erro ao listar contatos", e);
         }
-        return null;
     }
 
     public static void atualizar(contato contatoAtualizado){
-        for (contato c : contatos){
-            if(c.getId().equals(contatoAtualizado.getId())){
-                c.setNome(contatoAtualizado.getNome());
-                c.setTelefone(contatoAtualizado.getTelefone());
-                c.setEmail(contatoAtualizado.getEmail());
-                break;
-            }
+        var query = "UPDATE contatos SET nome = '" 
+                        + contatoAtualizado.getNome() + "', telefone = '" + contatoAtualizado.getTelefone() + "', email = '" + contatoAtualizado.getEmail() + "' WHERE id = '" + contatoAtualizado.getId() + "'";
+        try{
+            var connection = DatabaseConnect.getConnection();
+            var statement = connection.createStatement();
+            statement.executeUpdate(query);
+        }catch(Exception e){
+            throw new RuntimeException("Erro ao listar contatos", e);
         }
     }
 
     public static void remover(contato contatoAtualizado){
-        for (contato c : contatos){
-            if(c.getId()==contatoAtualizado.getId()){
-                contatos.remove(c);
-                break;
-            }
+        var query = "DELETE FROM contatos WHERE "+
+                    "id = '" + contatoAtualizado.getId() + "'";
+        try{
+            var connection = DatabaseConnect.getConnection();
+            var statement = connection.createStatement();
+            statement.executeUpdate(query);
+
+        }catch(Exception e){
+            throw new RuntimeException("Erro ao listar contatos", e);
         }
     }
 
     public static void adicionar(contato novoContato){
-        contatos.add(novoContato);
+        var query = "INSERT INTO contatos (nome, telefone, email)"+
+                     " VALUES ("+
+                     "'" + novoContato.getNome() + "',"+
+                     "'" + novoContato.getTelefone() + "', "+
+                     "'" + novoContato.getEmail() + "')";
+        try{
+            var connection = DatabaseConnect.getConnection();
+            var statement = connection.createStatement();
+            statement.executeUpdate(query);
+
+        }catch(Exception e){
+            throw new RuntimeException("Erro ao listar contatos", e);
+        }
     }
 }
