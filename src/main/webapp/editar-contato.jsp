@@ -23,7 +23,7 @@
             <label for="email" class="form-label">Email</label>
             <input type="email" class="form-control" id="email" value="${contato.email}" name="email" required>
         </div>
-        <a href="${pageContext.request.contextPath}/agenda" type="submit" class="btn btn-primary btn-lg mt-3">Salvar</a>
+        <button type="submit" class="btn btn-primary btn-lg mt-3">Salvar</button>
     </form>
 
 

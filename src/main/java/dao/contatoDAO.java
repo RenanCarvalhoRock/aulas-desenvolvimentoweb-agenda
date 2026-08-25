@@ -1,5 +1,8 @@
 package dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,26 +10,24 @@ import factory.DatabaseConnect;
 import model.contato;
 
 public class contatoDAO {
-    private static List<contato> contatos = new ArrayList<>();
-
     public static List<contato> listar() {
         var query = "SELECT * FROM contatos";
-        try{
-            var connection = DatabaseConnect.getConnection();
-            var statement = connection.createStatement();
-            var resultSet = statement.executeQuery(query);
+        List<contato> contatos = new ArrayList<>();
+        try (Connection connection = DatabaseConnect.getConnection();
+                PreparedStatement statement = connection.prepareStatement(query);
+                ResultSet resultSet = statement.executeQuery()) {
 
-            while(resultSet.next()){
+            while (resultSet.next()) {
                 var c = contato.builder()
-                .id(resultSet.getString("id"))
-                .nome(resultSet.getString("nome"))
-                .telefone(resultSet.getString("telefone"))
-                .email(resultSet.getString("email"))
-                .build();
+                        .id(resultSet.getString("id"))
+                        .nome(resultSet.getString("nome"))
+                        .telefone(resultSet.getString("telefone"))
+                        .email(resultSet.getString("email"))
+                        .build();
                 contatos.add(c);
             }
             return contatos;
-        }catch(Exception e){
+        } catch (Exception e) {
             throw new RuntimeException("Erro ao listar contatos", e);
         }
     }
