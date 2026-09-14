@@ -35,21 +35,21 @@ public class contatoDAO {
     public static contato buscarPorId(String id) {
         var query = "SELECT * FROM contatos WHERE id = ?";
         try (Connection connection = DatabaseConnect.getConnection();
-                PreparedStatement statement = connection.prepareStatement(query);
-                ResultSet resultSet = statement.executeQuery()) {
+                PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setString(1, id);
 
-            if (resultSet.next()) {
-                var c = contato.builder()
-                        .id(resultSet.getString("id"))
-                        .nome(resultSet.getString("nome"))
-                        .telefone(resultSet.getString("telefone"))
-                        .email(resultSet.getString("email"))
-                        .build();
-                return c;
-            } else {
-                return null;
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return contato.builder()
+                            .id(resultSet.getString("id"))
+                            .nome(resultSet.getString("nome"))
+                            .telefone(resultSet.getString("telefone"))
+                            .email(resultSet.getString("email"))
+                            .build();
+                } else {
+                    return null;
+                }
             }
         } catch (Exception e) {
             throw new RuntimeException("Erro ao buscar contato por ID", e);
@@ -66,7 +66,7 @@ public class contatoDAO {
             statement.setString(3, contatoAtualizado.getEmail());
             statement.setString(4, contatoAtualizado.getId());
 
-            statement.executeUpdate(query);
+            statement.executeUpdate();
         } catch (Exception e) {
             throw new RuntimeException("Erro ao atualizar contato", e);
         }
@@ -77,9 +77,8 @@ public class contatoDAO {
         try (Connection connection = DatabaseConnect.getConnection();
                 PreparedStatement statement = connection.prepareStatement(query)) {
 
-            statement.setString(1, contatoAtualizado.getId());    
-            statement.executeUpdate(query);
-
+            statement.setString(1, contatoAtualizado.getId());
+            statement.executeUpdate();
         } catch (Exception e) {
             throw new RuntimeException("Erro ao remover contato", e);
         }
@@ -88,13 +87,12 @@ public class contatoDAO {
     public static void adicionar(contato novoContato) {
         var query = "INSERT INTO contatos (nome, telefone, email) VALUES(?,?,?)";
         try (Connection connection = DatabaseConnect.getConnection();
-                PreparedStatement statement = connection.prepareStatement(query)){
+                PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setString(1, novoContato.getNome());
             statement.setString(2, novoContato.getTelefone());
             statement.setString(3, novoContato.getEmail());
-            statement.executeUpdate(query);
-
+            statement.executeUpdate();
         } catch (Exception e) {
             throw new RuntimeException("Erro ao adicionar contato", e);
         }
