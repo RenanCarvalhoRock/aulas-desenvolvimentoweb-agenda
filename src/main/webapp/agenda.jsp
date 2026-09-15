@@ -10,6 +10,7 @@
         <body class="text-left mt-5">
             <div class="container mt-4">
                 <h2>Agenda de Contatos</h2>
+                <a href="${pageContext.request.contextPath}/novo-contato.jsp" class="btn btn-success mb-2">Novo</a>
                 <table class="table table-striped mt-3">
                     <thead class="table-dark">
                         <tr>
@@ -29,7 +30,7 @@
                                 <td>${c.email}</td>
                                 <td>
                                     <a href="${pageContext.request.contextPath}/editar-contato?id=${c.id}" class="btn btn-sm btn-warning">Editar</a>
-                                    <a href="${pageContext.request.contextPath}/excluir-contato?id=${c.id}" class="btn btn-sm btn-danger">Excluir</a>
+                                    <a href="${pageContext.request.contextPath}/excluir-contato?id=${c.id}" class="btn btn-sm btn-danger" onclick="return confirm('Excluir este contato?');">Excluir</a>
                                 </td>
                             </tr>
                         </c:forEach>

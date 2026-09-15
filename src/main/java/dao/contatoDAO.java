@@ -33,7 +33,7 @@ public class contatoDAO {
     }
 
     public static contato buscarPorId(String id) {
-        var query = "SELECT * FROM contatos WHERE id = ?";
+        var query = "SELECT * FROM contatos WHERE id = CAST(? AS INTEGER)";
         try (Connection connection = DatabaseConnect.getConnection();
                 PreparedStatement statement = connection.prepareStatement(query)) {
 
@@ -57,7 +57,7 @@ public class contatoDAO {
     }
 
     public static void atualizar(contato contatoAtualizado) {
-        var query = "UPDATE contatos SET nome = ?, telefone = ?, email = ? WHERE id = ?";
+        var query = "UPDATE contatos SET nome = ?, telefone = ?, email = ? WHERE id = CAST(? AS INTEGER)";
         try (Connection connection = DatabaseConnect.getConnection();
                 PreparedStatement statement = connection.prepareStatement(query)) {
 
@@ -73,7 +73,7 @@ public class contatoDAO {
     }
 
     public static void remover(contato contatoAtualizado) {
-        var query = "DELETE FROM contatos WHERE id = ?";
+        var query = "DELETE FROM contatos WHERE id = CAST(? AS INTEGER)";
         try (Connection connection = DatabaseConnect.getConnection();
                 PreparedStatement statement = connection.prepareStatement(query)) {
 

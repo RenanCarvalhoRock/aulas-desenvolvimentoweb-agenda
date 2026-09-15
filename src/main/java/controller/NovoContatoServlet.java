@@ -21,6 +21,7 @@ public class NovoContatoServlet extends HttpServlet{
         .build();
 
         contatoDAO.adicionar(novoContato);
+        response.sendRedirect(request.getContextPath() + "/agenda");
     }
 
 }

@@ -22,8 +22,8 @@
             <label for="email" class="form-label">Email</label>
             <input type="email" class="form-control" id="email" name="email" required>
         </div>
-        <a href="${pageContext.request.contextPath}/agenda" type="submit" class="btn btn-primary btn-lg mt-3">Salvar</a>
-        <a href="${pageContext.request.contextPath}/agenda" type="submit" class="btn btn-outline-secondary btn-lg mt-3">Cancelar</a>
+        <button type="submit" class="btn btn-primary btn-lg mt-3">Salvar</button>
+        <a href="${pageContext.request.contextPath}/agenda" class="btn btn-outline-secondary btn-lg mt-3">Cancelar</a>
     </form>
 
 
