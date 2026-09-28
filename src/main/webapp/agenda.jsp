@@ -10,7 +10,8 @@
         <body class="text-left mt-5">
             <div class="container mt-4">
                 <h2>Agenda de Contatos</h2>
-                <a href="${pageContext.request.contextPath}/novo-contato.jsp" class="btn btn-success mb-2">Novo</a>
+                <a href="${pageContext.request.contextPath}/novo-contato.jsp" class="btn btn-success mb-2">+ Novo Contato</a>
+                <a href="${pageContext.request.contextPath}/buscar-contato.jsp" class="btn btn-outline-primary mb-2">🔍 Buscar</a>
                 <table class="table table-striped mt-3">
                     <thead class="table-dark">
                         <tr>
