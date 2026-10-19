@@ -22,7 +22,7 @@
                             <th>Opções</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="tabela-contatos">
                         <c:forEach var="c" items="${contatos}">
                             <tr>
                                 <td>${c.id}</td>

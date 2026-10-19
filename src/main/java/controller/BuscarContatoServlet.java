@@ -17,7 +17,7 @@ public class BuscarContatoServlet extends HttpServlet {
         String nome = request.getParameter("nome");
 
         if (nome != null && !nome.isBlank()) {
-            request.setAttribute("contatos", contatoDAO.buscarPorNome(nome));
+            request.setAttribute("contatos", "contatoDAO.buscarPorNome(nome)");
             request.setAttribute("termo", nome);
             request.setAttribute("buscou", true);
         }
