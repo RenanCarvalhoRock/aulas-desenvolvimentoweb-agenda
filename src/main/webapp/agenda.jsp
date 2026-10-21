@@ -23,18 +23,6 @@
                         </tr>
                     </thead>
                     <tbody id="tabela-contatos">
-                        <c:forEach var="c" items="${contatos}">
-                            <tr>
-                                <td>${c.id}</td>
-                                <td>${c.nome}</td>
-                                <td>${c.telefone}</td>
-                                <td>${c.email}</td>
-                                <td>
-                                    <a href="${pageContext.request.contextPath}/editar-contato?id=${c.id}" class="btn btn-sm btn-warning">Editar</a>
-                                    <a href="${pageContext.request.contextPath}/excluir-contato?id=${c.id}" class="btn btn-sm btn-danger" onclick="return confirm('Excluir este contato?');">Excluir</a>
-                                </td>
-                            </tr>
-                        </c:forEach>
                     </tbody>
                 </table>
 
