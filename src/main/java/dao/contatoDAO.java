@@ -56,6 +56,31 @@ public class contatoDAO {
         }
     }
 
+    public static List<contato> buscarPorNome(String nome) {
+        var query = "SELECT * FROM contatos WHERE LOWER(nome) LIKE LOWER(?)";
+        List<contato> contatos = new ArrayList<>();
+        try (Connection connection = DatabaseConnect.getConnection();
+                PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setString(1, "%" + nome + "%");
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    var c = contato.builder()
+                            .id(resultSet.getString("id"))
+                            .nome(resultSet.getString("nome"))
+                            .telefone(resultSet.getString("telefone"))
+                            .email(resultSet.getString("email"))
+                            .build();
+                    contatos.add(c);
+                }
+                return contatos;
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao buscar contatos por nome", e);
+        }
+    }
+
     public static void atualizar(contato contatoAtualizado) {
         var query = "UPDATE contatos SET nome = ?, telefone = ?, email = ? WHERE id = CAST(? AS INTEGER)";
         try (Connection connection = DatabaseConnect.getConnection();
@@ -84,15 +109,22 @@ public class contatoDAO {
         }
     }
 
-    public static void adicionar(contato novoContato) {
+    public static contato adicionar(contato novoContato) {
         var query = "INSERT INTO contatos (nome, telefone, email) VALUES(?,?,?)";
         try (Connection connection = DatabaseConnect.getConnection();
-                PreparedStatement statement = connection.prepareStatement(query)) {
+                PreparedStatement statement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)) {
 
             statement.setString(1, novoContato.getNome());
             statement.setString(2, novoContato.getTelefone());
             statement.setString(3, novoContato.getEmail());
             statement.executeUpdate();
+
+            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    novoContato.setId(generatedKeys.getString(1));
+                }
+            }
+            return novoContato;
         } catch (Exception e) {
             throw new RuntimeException("Erro ao adicionar contato", e);
         }
